@@ -29,20 +29,13 @@ func fstr(f float64) string {
 	return strconv.FormatFloat(f, 'f', 2, 64)
 }
 
-func trunc(s string, max int) string {
-	if len(s) > max {
-		return s[:max]
-	}
-	return s
-}
-
 func Log(op, desc string, valor float64) {
 	hhmm := time.Now().Format("03:04")
 	fmt.Printf(
-		"%s %-6s %-12s %8s %8s %8s\n",
+		"%s %-6.6s %-12.12s %8s %8s %8s\n",
 		hhmm,
-		trunc(op, 6),
-		trunc(desc, 12),
+		op,
+		desc,
 		fstr(saldoAnterior),
 		fstr(valor),
 		fstr(saldo),

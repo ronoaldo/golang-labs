@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Olá, mundo")
-	fmt.Println(time.Now().Format("2006/01/02"))
+	fmt.Println("Olá, mundo!")
+	fmt.Println(time.Now().Format("02/01/2006"))
 }
