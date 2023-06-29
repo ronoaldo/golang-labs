@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 	"sync/atomic"
+	"time"
 )
 
 type Fetcher interface {
@@ -84,6 +85,8 @@ type fakeResult struct {
 }
 
 func (f fakeFetcher) Fetch(url string) (string, []string, error) {
+	// Fake latency
+	time.Sleep(123 * time.Millisecond)
 	if res, ok := f[url]; ok {
 		return res.body, res.urls, nil
 	}
