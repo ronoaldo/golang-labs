@@ -13,9 +13,11 @@ import (
 )
 
 var filename string
+var outfile string
 
 func init() {
 	flag.StringVar(&filename, "s", "gs://arki1/gopher.txt", "The `GCS storage path` to read from")
+	flag.StringVar(&outfile, "o", "", "The `output` to record to, defaults to os.Stdout")
 }
 
 func main() {
@@ -25,6 +27,7 @@ func main() {
 	client, err := storage.NewClient(ctx, option.WithoutAuthentication())
 	if err != nil {
 		log.Printf("Error initializing storage client: %v", err)
+		return
 	}
 
 	parts := strings.Split(filename, "//")
@@ -45,7 +48,16 @@ func main() {
 		return
 	}
 
-	if _, err := io.Copy(os.Stdout, fd); err != nil {
+	var out io.Writer = os.Stdout
+	if outfile != "" {
+		out, err = os.Create(outfile)
+		if err != nil {
+			log.Printf("Error opening file for write '%v': %v", outfile, err)
+			return
+		}
+	}
+
+	if _, err := io.Copy(out, fd); err != nil {
 		log.Printf("Error reading object: %v", err)
 	}
 }
