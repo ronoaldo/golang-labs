@@ -4,6 +4,7 @@
 *.ipr
 venv
 users.csv
+users_bq.txt
 events.json
 schema.json
 transform.js

@@ -29,15 +29,14 @@ type CommonLog struct {
 }
 
 func JSONToCommonLog(line string, emit func(CommonLog)) {
-	dst := &CommonLog{}
-	if err := json.Unmarshal([]byte(line), dst); err != nil {
+	dst := CommonLog{}
+	if err := json.Unmarshal([]byte(line), &dst); err != nil {
 		log.Fatalf("Error parsing line: %v", err)
 	}
-	emit(*dst)
+	emit(dst)
 }
 
 func init() {
-	// DoFn/Types registration
 	beam.RegisterType(reflect.TypeOf((*CommonLog)(nil)).Elem())
 	beam.RegisterDoFn(JSONToCommonLog)
 }
@@ -47,6 +46,7 @@ func main() {
 	beam.Init()
 
 	p := beam.NewPipeline()
+	s := p.Root()
 
 	// TODO: altere este valor antes de executar o pipeline
 	project := "YOUR-PROJECT-ID-HERE"
@@ -54,10 +54,9 @@ func main() {
 	input := "gs://" + project + "/events.json"
 	output := project + ":logs.logs"
 
-	s := p.Root()
-	lines := textio.Read(s, input)
-	commonLogs := beam.ParDo(s, JSONToCommonLog, lines)
-	bigqueryio.Write(s, project, output, commonLogs)
+	lines := textio.Read(s.Scope("ReadLines"), input)
+	commonLogs := beam.ParDo(s.Scope("ParseJSON"), JSONToCommonLog, lines)
+	bigqueryio.Write(s.Scope("WriteToBQ"), project, output, commonLogs)
 
 	log.Println("Building pipeline ...")
 	if err := beamx.Run(context.Background(), p); err != nil {
