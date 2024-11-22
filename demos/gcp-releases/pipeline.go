@@ -111,8 +111,8 @@ func init() {
 	beam.RegisterType(ReleaseNotesType)
 
 	beam.RegisterDoFn(AsJSON)
-	beam.RegisterFunction(ExtractType)
-	beam.RegisterFunction(FormatCount)
+	beam.RegisterDoFn(ExtractType)
+	beam.RegisterDoFn(FormatCount)
 	beam.RegisterDoFn(&FilterReleses{})
 }
 
