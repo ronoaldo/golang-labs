@@ -1,0 +1,12 @@
+{
+    "name": "GCP Release Notes",
+    "description": "An Apache Beam batch pipeline that parses and reports on GCP release notes.",
+    "parameters": [
+        {
+            "name": "output-dir",
+            "label": "Output directory",
+            "helpText": "GCS location to write output to.",
+            "isOptional": true
+        }
+    ]
+}

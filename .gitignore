@@ -1,2 +1,8 @@
 demos/wordcount/wordcount
 demos/wordcount/wordcount.txt
+
+demos/gcp-releases/gcp-releases
+demos/gcp-releases/pipeline
+demos/gcp-releases/pipeline.dot
+demos/gcp-releases/pipeline.png
+demos/gcp-releases/*.jsonl

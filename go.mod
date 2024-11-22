@@ -5,6 +5,7 @@ go 1.23
 toolchain go1.23.3
 
 require (
+	cloud.google.com/go v0.116.0
 	cloud.google.com/go/bigquery v1.64.0
 	cloud.google.com/go/storage v1.47.0
 	github.com/apache/beam/sdks/v2 v2.60.0
@@ -13,7 +14,6 @@ require (
 
 require (
 	cel.dev/expr v0.18.0 // indirect
-	cloud.google.com/go v0.116.0 // indirect
 	cloud.google.com/go/auth v0.10.2 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.5 // indirect
 	cloud.google.com/go/compute/metadata v0.5.2 // indirect
